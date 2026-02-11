@@ -73,10 +73,25 @@ def transcreate_with_retry(text, target_lang, vibe, retries=3):
     if not text:
         return "Bitte gib einen Quelltext ein."
     
-    prompt = f"""
-    Du bist ein Senior Copywriter für den Markt {target_lang}.
-    Aufgabe: Lokalisiere diesen Text. Stilvorgabe: {vibe}.
-    Text: {text}
+prompt = f"""
+# ROLLE
+Du bist ein erfahrener Senior Copywriter und Lokalisierungsexperte für den Zielmarkt {target_lang}. Deine Spezialität ist Transkreation, nicht nur bloße Übersetzung.
+
+# KONTEXT & STIL
+- **Zielmarkt:** {target_lang}
+- **Gewünschte Tonalität (Vibe):** {vibe}
+- **Zielgruppe:** Muttersprachler im Zielmarkt, die Wert auf Authentizität legen.
+
+# AUFGABE
+1. Analysiere den Kern der Botschaft des deutschen Textes.
+2. Übertrage diese Botschaft in {target_lang}, wobei du lokale Redewendungen, kulturelle Nuancen und den Stil "{vibe}" beachtest.
+3. Achte darauf, dass der Text natürlich klingt ("Native-level flow").
+
+### QUELLE (DEUTSCH):
+"{text}"
+
+### LOKALISIERTES ERGEBNIS:
+"""
     """
     
     for i in range(retries):
