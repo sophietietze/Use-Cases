@@ -130,13 +130,21 @@ Falls das Tool nicht wie erwartet startet, prüfe folgende Punkte:
 
 **Problem	Ursache	Lösung**
 ```bash
-ModuleNotFoundError # Bibliotheken fehlen im venv.	Stelle sicher, dass (venv) im Terminal steht und führe pip install -U google-genai gradio python-dotenv erneut aus.
+ModuleNotFoundError
 ```
-```bash 401 Unauthorized # API-Key ist falsch oder ungültig.	Prüfe die .env Datei. Der Key darf keine Anführungszeichen enthalten (z. B. GEMINI_API_KEY=AIza...).
-```
+Bibliotheken fehlen im venv.	Stelle sicher, dass (venv) im Terminal steht und führe pip install -U google-genai gradio python-dotenv erneut aus.
 
-```bash 429 Resource Exhausted # Free-Tier Limit erreicht.	Das Tool wartet automatisch 35 Sek. Sollte es dauerhaft auftreten, prüfe im Google AI Studio dein Kontingent.
+```bash
+401 Unauthorized
 ```
+API-Key ist falsch oder ungültig.	Prüfe die .env Datei. Der Key darf keine Anführungszeichen enthalten (z. B. GEMINI_API_KEY=AIza...).
 
-```bash 404 Not Found	# Falscher Modellname. Dein Key unterstützt evtl. nur bestimmte Modelle. Ersetze im Code gemini-2.5-flash durch gemini-1.5-flash.
+```bash
+429 Resource Exhausted
 ```
+Free-Tier Limit erreicht.	Das Tool wartet automatisch 35 Sek. Sollte es dauerhaft auftreten, prüfe im Google AI Studio dein Kontingent.
+
+```bash
+404 Not Found
+```
+Falscher Modellname. Dein Key unterstützt evtl. nur bestimmte Modelle. Ersetze im Code gemini-2.5-flash durch gemini-1.5-flash.
