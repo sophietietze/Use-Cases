@@ -4,58 +4,58 @@ An e-commerce shop wants to adapt its German product descriptions for the Spanis
 
 # Learning effect
 
-**Business**: Understanding scaling effects in e-commerce.
-**Computer science**: API integration and asynchronous error handling.
-**Languages**: Application of localization strategies.
-**Design**: UX design for AI tools (Gradio).
+**Business**: Understanding scaling effects and transcreation in global e-commerce.
 
-**Cultural Adaptation:** Automatic adjustment of units of measurement, currencies, and idioms. 
-**Style Engine:** Choose between Luxurious, Playful, Professional, Sustainable, and more. 
-**Back Translation:** Receive a German translation back for quality control. 
-**Global Reach:** Support for International Target Markets
+**Computer Science**: API integration, modern package management with uv, and error handling.
 
-**Prerequisites:** Ensure you have the following installed:
+**Languages**: Application of localization strategies instead of literal translation.
 
-**Python 3.9 or higher** and **Google AI Studio API Key**
+**Design**: Creating functional AI interfaces with Gradio.
 
-**Installation & Setup: **Follow these steps to set up the tool in your **use_case** folder:
+# Key Features
+**Cultural Adaptation**: Automatic adjustment of idioms and tone.
 
+**Style Engine**: Choose between Luxurious, Playful, Professional, or Sustainable.
 
-# 1. Preparation & Setup
+**Smart Retry:** Automatically handles API rate limits (429 errors) with a 35-second cooldown.
 
-Open your terminal (or CMD), navigate to your folder, and run these commands to install the necessary packages and create the structure:
+**Modern Stack:** Powered by Google Gemini 2.5 Flash and managed via ```bash uv. ```
+
+# Installation & Setup
+**1. Prerequisites:** 
+Ensure you have the following installed:
+
+1. Installed **uv**(If not: ```bash curl -LsSf https://astral.sh/uv/install.sh | sh or brew install uv```)
+
+2. **Google AI Studio API Key** (Get it at (https://aistudio.google.com/app/api-keys))
+   
+
+**2. Initialize Project**
+Navigate to your project folder and run:
 
 ```bash
-# Change to the folder
-cd use_case
+#Initialize project structure
+uv init
 ```
 
 ```bash
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate
+uv venv
 ```
 
 ```bash
-# Install libraries
-pip install google-generativeai gradio python-dotenv
+# Add required libraries (uv handles venv automatically)
+uv add google-genai gradio python-dotenv
 ```
+uv automatically creates a pyproject.toml and a uv.lock file, which guarantees that everyone running your script uses exactly the same versions.
 
-# 2. Create the files
+**3. Configuration**
+Create a ```bash .env ``` file in the root directory:
 
-Create two files in your use_case folder:
-
-**A)** ```bash .env ``` (Your login credentials)
-
-Save your API key securely here.
 ```bash
-GEMINI_API_KEY=INSERT YOUR_API_KEY_HERE
+GEMINI_API_KEY=YOUR_API_KEY
 ```
-You can create and copy a **Google AI Studio API key** for free at [aistudio.google.com](https://aistudio.google.com/api-keys?projectFilter=gen-lang-client-0695470617)).
 
-
-**B)** ```bash app.py ``` (The Program)
-
+**4. Application Code**
 Copy this code into the file. It contains the logic for the interface and the optimized transcreation prompt.
 
 ```bash
@@ -132,17 +132,17 @@ if __name__ == "__main__":
     demo.launch()
 ```
 
-# 3. Starten des Tools
+# 4. Starten des Tools
 
 Once you have saved both files in the folder, start the tool with:
 
 ```bash
-python app.py
+uv run app.py
 ```
 
 The terminal will give you a URL (usually **http://127.0.0.1:7860**). Open this in your browser, and you will have your finished interface.
 
-# Troubleshooting
+# 5. Troubleshooting
 
 If the tool does not start as expected, check the following:
 
