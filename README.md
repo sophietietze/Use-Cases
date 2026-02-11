@@ -65,7 +65,6 @@ import gradio as gr
 from google import genai
 from dotenv import load_dotenv
 
-# Setup
 load_dotenv()
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
@@ -73,58 +72,51 @@ def transcreate_with_retry(text, target_lang, vibe, retries=3):
     if not text:
         return "Bitte gib einen Quelltext ein."
     
-prompt = f"""
+    prompt = f"""
 # ROLLE
-Du bist ein erfahrener Senior Copywriter und Lokalisierungsexperte für den Zielmarkt {target_lang}. Deine Spezialität ist Transkreation, nicht nur bloße Übersetzung.
+Du bist ein erfahrener Senior Copywriter für den Markt {target_lang}. Deine Spezialität ist Transkreation.
 
 # KONTEXT & STIL
-- **Zielmarkt:** {target_lang}
-- **Gewünschte Tonalität (Vibe):** {vibe}
-- **Zielgruppe:** Muttersprachler im Zielmarkt, die Wert auf Authentizität legen.
+- Zielmarkt: {target_lang}
+- Tonalität: {vibe}
+- Zielgruppe: Native Speaker
 
 # AUFGABE
-1. Analysiere den Kern der Botschaft des deutschen Textes.
-2. Übertrage diese Botschaft in {target_lang}, wobei du lokale Redewendungen, kulturelle Nuancen und den Stil "{vibe}" beachtest.
-3. Achte darauf, dass der Text natürlich klingt ("Native-level flow").
+1. Analysiere den Kern der Botschaft (DE).
+2. Übertrage diese in {target_lang} mit Fokus auf kulturelle Nuancen und den Stil "{vibe}".
+3. Achte auf natürlichen Textfluss ("Native-level flow").
 
 ### QUELLE (DEUTSCH):
 "{text}"
 
 ### LOKALISIERTES ERGEBNIS:
 """
-    """
     
     for i in range(retries):
         try:
-            # Wir nutzen das Modell aus deiner Liste
             response = client.models.generate_content(
                 model="gemini-2.5-flash", 
                 contents=prompt
             )
             return response.text
-        
         except Exception as e:
             if "429" in str(e) and i < retries - 1:
-                wait_time = 35  # Wir warten etwas länger als die geforderten 33s
-                print(f"Limit erreicht. Warte {wait_time}s... (Versuch {i+1}/{retries})")
-                time.sleep(wait_time)
+                print(f"Limit erreicht. Warte 35s... (Versuch {i+1}/{retries})")
+                time.sleep(35)
                 continue
-            return f"Fehler nach mehreren Versuchen: {str(e)}"
+            return f"Fehler: {str(e)}"
 
-# Modernisiertes Interface
-with gr.Blocks(title="Gemini Transcreator 2026") as demo:
-    gr.Markdown("# 🚀 AI Content Localizer (Gemini 2.5 Flash)")
-    
+with gr.Blocks(title="Gemini Transcreator 2026", theme=gr.themes.Soft()) as demo:
+    gr.Markdown("# 🚀 AI Content Localizer")
     with gr.Row():
-        with gr.Column(scale=1):
-            source = gr.Textbox(label="Deutscher Quelltext", lines=8, placeholder="Füge hier die Produktbeschreibung ein...")
-            lang = gr.Dropdown(choices=["Spanisch", "Französisch", "Italienisch", "Englisch (UK)"], label="Zielsprache", value="Spanisch")
-            vibe = gr.Dropdown(choices=["Luxuriös/Elegant", "Spielerisch/Jung", "Professionell", "Nachhaltig"], label="Stilrichtung", value="Luxuriös/Elegant")
+        with gr.Column():
+            source = gr.Textbox(label="Deutscher Quelltext", lines=8)
+            lang = gr.Dropdown(["Spanisch", "Französisch", "Italienisch", "Englisch (UK)"], label="Zielsprache", value="Spanisch")
+            vibe = gr.Dropdown(["Luxuriös/Elegant", "Spielerisch/Jung", "Professionell", "Nachhaltig"], label="Stil", value="Luxuriös/Elegant")
             btn = gr.Button("Lokalisierung starten", variant="primary")
-            
-        with gr.Column(scale=1):
+        with gr.Column():
             output = gr.Textbox(label="Lokalisierter Text", lines=15, interactive=False)
-            gr.Markdown("ℹ️ *Das Tool wartet bei Quota-Limits automatisch 35 Sekunden.*")
+            gr.Markdown("ℹ️ *Tool wartet automatisch bei Rate-Limits.*")
 
     btn.click(fn=transcreate_with_retry, inputs=[source, lang, vibe], outputs=output)
 
