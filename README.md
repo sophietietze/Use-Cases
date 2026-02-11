@@ -1,59 +1,62 @@
-# Automatisierte Content-Lokalisierung & "Transcreation"
+# Automated Content Localization & Transcreation
 
-Ein E-Commerce-Shop möchte seine deutschen Produktbeschreibungen für den spanischen und französischen Markt anpassen – aber nicht nur übersetzen, sondern kulturell optimieren.
+An e-commerce shop wants to adapt its German product descriptions for the Spanish and French markets—not just translate them, but optimize them culturally.
 
-**Kulturelle Adaption:** Automatische Anpassung von Maßeinheiten, Währungen und Redewendungen.
-**Stil-Engine:** Wähle zwischen Luxuriös, Spielerisch, Professionell, Nachhaltig und mehr.
-**Back-Translation:** Erhalte eine deutsche Rückübersetzung zur Qualitätskontrolle.
-**Globale Reichweite:** Unterstützung für internationale Zielmärkte
+# Learning effect
 
-**Voraussetzungen**
-Stelle sicher, dass du folgende Dinge installiert hast:
+**Business**: Understanding scaling effects in e-commerce.
+**Computer science**: API integration and asynchronous error handling.
+**Languages**: Application of localization strategies.
+**Design**: UX design for AI tools (Gradio).
 
-**Python 3.9 oder höher**
-**Google AI Studio API Key**
+**Cultural Adaptation:** Automatic adjustment of units of measurement, currencies, and idioms. 
+**Style Engine:** Choose between Luxurious, Playful, Professional, Sustainable, and more. 
+**Back Translation:** Receive a German translation back for quality control. 
+**Global Reach:** Support for International Target Markets
 
-**Installation & Setup**
-Folge diesen Schritten, um das Tool in deinem Ordner **use_case** einzurichten:
+**Prerequisites:** Ensure you have the following installed:
+
+**Python 3.9 or higher** and **Google AI Studio API Key**
+
+**Installation & Setup: **Follow these steps to set up the tool in your **use_case** folder:
 
 
-# 1. Vorbereitung & Setup
+# 1. Preparation & Setup
 
-Öffne dein **Terminal** (oder CMD), navigiere in deinen Ordner und führe diese Befehle aus, um die notwendigen Pakete zu installieren und die Struktur anzulegen:
+Open your terminal (or CMD), navigate to your folder, and run these commands to install the necessary packages and create the structure:
 
 ```bash
-# In den Ordner wechseln
+# Change to the folder
 cd use_case
 ```
 
-
 ```bash
-# Virtuelle Umgebung erstellen
+# Create virtual environment
 python -m venv venv
 source venv/bin/activate
 ```
 
 ```bash
-# Bibliotheken installieren
+# Install libraries
 pip install google-generativeai gradio python-dotenv
 ```
 
-# 2. Die Dateien erstellen
+# 2. Create the files
 
-Erstelle in deinem Ordner use_case zwei Dateien:
+Create two files in your use_case folder:
 
-**A)** ```bash .env ``` (Deine Zugangsdaten)
+**A)** ```bash .env ``` (Your login credentials)
 
-Hier speicherst du deinen API-Key sicher ab.
+Save your API key securely here.
 ```bash
-GEMINI_API_KEY=DEIN_API_KEY_HIER_EINSETZEN
+GEMINI_API_KEY=INSERT YOUR_API_KEY_HERE
 ```
-Einen **Google AI Studio API Key** kannst du kostenlos unter [aistudio.google.com](https://aistudio.google.com/api-keys?projectFilter=gen-lang-client-0695470617)) erstellen und kopieren.
+You can create and copy a **Google AI Studio API key** for free at [aistudio.google.com](https://aistudio.google.com/api-keys?projectFilter=gen-lang-client-0695470617)).
 
 
-**B)** ```bash app.py ``` (Das Programm)
+**B)** ```bash app.py ``` (The Program)
 
-Kopiere diesen Code in die Datei. Er enthält die Logik für das Interface und den optimierten Transcreation-Prompt.
+Copy this code into the file. It contains the logic for the interface and the optimized transcreation prompt.
 
 ```bash
 import os
@@ -116,35 +119,35 @@ if __name__ == "__main__":
 
 # 3. Starten des Tools
 
-Wenn du beide Dateien im Ordner und gespeichert hast, startest du das Tool mit:
+Once you have saved both files in the folder, start the tool with:
 
 ```bash
 python app.py
 ```
 
-Das Terminal gibt dir eine URL (meist **http://127.0.0.1:7860**). Öffne diese im Browser, und du hast dein fertiges Interface.
+The terminal will give you a URL (usually **http://127.0.0.1:7860**). Open this in your browser, and you will have your finished interface.
 
 # Troubleshooting
 
-Falls das Tool nicht wie erwartet startet, prüfe folgende Punkte:
+If the tool does not start as expected, check the following:
 
-**Problem	Ursache	Lösung**
+**Problem Cause Solution**
 ```bash
 ModuleNotFoundError
 ```
-Bibliotheken fehlen im venv.	Stelle sicher, dass (venv) im Terminal steht und führe pip install -U google-genai gradio python-dotenv erneut aus.
+Libraries are missing in the venv. Make sure `(venv)` is displayed in the terminal and run `pip install -U google-genai gradio python-dotenv` again.
 
 ```bash
 401 Unauthorized
 ```
-API-Key ist falsch oder ungültig.	Prüfe die .env Datei. Der Key darf keine Anführungszeichen enthalten (z. B. GEMINI_API_KEY=AIza...).
+API key is incorrect or invalid. Check the `.env` file. The key must not contain quotation marks (e.g., GEMINI_API_KEY=AIza...).
 
 ```bash
 429 Resource Exhausted
 ```
-Free-Tier Limit erreicht.	Das Tool wartet automatisch 35 Sek. Sollte es dauerhaft auftreten, prüfe im Google AI Studio dein Kontingent.
+Free-tier limit reached. The tool will automatically wait 35 seconds. If this error persists, check your quota in Google AI Studio.
 
 ```bash
 404 Not Found
 ```
-Falscher Modellname. Dein Key unterstützt evtl. nur bestimmte Modelle. Ersetze im Code gemini-2.5-flash durch gemini-1.5-flash.
+Incorrect model name. Your key may only support certain models. Replace `gemini-2.5-flash` with `gemini-1.5-flash` in the code.
